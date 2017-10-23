@@ -1,0 +1,19 @@
+//Produtor
+
+Channel mailBox;
+
+while(true){
+    Date message = new Date();
+    mailBox.send(message);
+}
+
+//===============================
+//Consumidor
+
+Channel mailBox
+
+while(true){
+    Date message = (Date) mailBox.receive();
+    if (message != null) //Sem bloqueio, é preciso avaliar o conteudo
+        //consume the message
+}

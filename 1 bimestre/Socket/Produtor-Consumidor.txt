@@ -1,0 +1,24 @@
+//Passagem de mensagens - Produtor-Consumidor: Caixa de correio
+public class MessageQueue implements Channel 
+//Representa uma conexao abreta para uma entidade:sockets, I/O, arquivos...
+{
+    private Vector queue;
+    
+    public MessageQueue(){
+        queue = new Vector();
+    }
+    
+    //This implements a nonblocking send
+    public void send(Object item){
+        queue.addElement(item);
+    }
+    
+    //This implements a nonblocking receive
+    public Object receive(){
+        if(queue.size() == 0)
+            return null;
+        else
+            return queue.remove(0);
+    }
+}
+    
