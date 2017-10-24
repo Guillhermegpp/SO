@@ -2,37 +2,37 @@ package SO;
 
 import javax.swing.JOptionPane;
 
-public class FCFS extends Escalona{
+public class FCFS{
 	
 	public void calcular() {
-		Escalona fsfc = new Escalona();
+		Escalona fcfs = new Escalona();
 		StringBuilder sb = new StringBuilder();
+		int i,j;
+		fcfs.entrada();
 		
-		fsfc.entrada();
-		
-		tEsp[0] = 0;
+		fcfs.tEsp[0] = 0;
 		//Calcular o tempo de espera
 		
-		for(i=1;i<n;i++){
-	        tEsp[i]=0;
+		for(i=1;i<fcfs.n;i++){
+			fcfs.tEsp[i]=0;
 	        for(j=0;j<i;j++)
-	            tEsp[i]+=burst[j];
+	        	fcfs.tEsp[i]+=fcfs.burst[j];
 	    }
 		//sb.append("P \t\t  Burst  \t\t\t  TE  \t\t\t ME\n");
 		//Calcular a media de espera
-		for(i=0;i<n;i++)
+		for(i=0;i<fcfs.n;i++)
 	    {
-	        tResp[i]=burst[i]+tEsp[i];
-	        mEsp+=tEsp[i];
-	        mResp+=tResp[i];
-	        sb.append("P"+ (i+1) +"  \tBurst: " + burst[i] + "    \t\tTE: " + tEsp[i] + 
-	        		"     \t\tME: "+tResp[i]+"\n");
+			fcfs.tResp[i]=fcfs.burst[i]+fcfs.tEsp[i];
+			fcfs.mEsp+=fcfs.tEsp[i];
+			fcfs.mResp+=fcfs.tResp[i];
+	        sb.append("P"+ (i+1) +"  \tBurst: " + fcfs.burst[i] + "    \t\tTE: " + fcfs.tEsp[i] + 
+	        		"     \t\tME: "+fcfs.tResp[i]+"\n");
 	        
 	    }
-		mEsp/=i;
-	    mResp/=i;
-	    sb.append("\n\nTempo medio de espera: "+mEsp);
-	    sb.append("\nTempo medio de entrega: "+mResp);
+		fcfs.mEsp/=i;
+		fcfs.mResp/=i;
+	    sb.append("\n\nTempo medio de espera: "+fcfs.mEsp);
+	    sb.append("\nTempo medio de entrega: "+fcfs.mResp);
 	    JOptionPane. showMessageDialog(null,sb);
 	}
 }

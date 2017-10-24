@@ -9,7 +9,7 @@ public class SJF {
 		int[] ord = new int[20];
 		StringBuilder sb = new StringBuilder();
 		sjf.entrada();
-		int aux;
+		/*int aux;*/
 		/*// ordenar
 		for (int k = 0; k < sjf.n; k++) {
 			for (int j = 0; j < sjf.n; j++) {

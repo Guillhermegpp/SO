@@ -20,6 +20,7 @@ public class Main/* extends Escalona*/{
 */
 	public static void main(String[] args) {
 		String menu;
+		Escalona pross = new Escalona();
 		do{
 			menu = JOptionPane.showInputDialog(
 					"1 - FSFC\n2 - SJF\n3 - SRTF\n"
@@ -27,7 +28,7 @@ public class Main/* extends Escalona*/{
 			
 			if( menu != null ){
 				switch( menu ){
-				case "1" : FCFS fcfs = new FCFS(); fcfs.calcular();/*FCFS*/
+				case "1" : pross.FCFS();/*FCFS*/
 					break;
 				case "2" : SJF sjf = new SJF(); sjf.calcular();/*SJF*/
 					break;
