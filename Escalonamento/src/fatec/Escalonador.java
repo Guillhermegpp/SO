@@ -3,19 +3,19 @@ package fatec;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
 public class Escalonador {
+	
 	public StringBuilder sb = new StringBuilder();
+	public StringBuilder gantt = new StringBuilder();
 	String entrada;
 	public ArrayList<Process> lista = new ArrayList<>();
 	public ArrayList<Process> listaOrd = new ArrayList<>();
-	public int n = 0, j, i, tEsp[] = new int[20], /* Tempo de espera */
-			mEsp = 0, /* Media de espera */
-			mResp = 0;/* Media de resposta */
-	Scanner scan = new Scanner(System.in);
+	public int n = 0, j, i, tEsp[] = new int[20]; /* Tempo de espera */
+	public float mEsp = 0, /* Media de espera */
+				mResp = 0;/* Media de resposta */
 
 	// Tela com quantidade de Processos
 	public void entrada() {
@@ -67,11 +67,29 @@ public class Escalonador {
 	// Calcula e imprimi os resultados
 	public void imprimir(ArrayList<Process> p) {
 		tEsp[0] = 0;
+		int cont = 0;
 		// Calcular o tempo de espera
 		for (i = 1; i < n; i++) {
 			tEsp[i] = 0;
 			for (j = 0; j < i; j++)
 				tEsp[i] += p.get(j).getBurst();
+			cont += p.get(i).getBurst();
+		}
+		try {
+			for (int i = 0; i < cont; i++) {
+				gantt.append("|");
+				// System.out.printf("|");
+				for (int j = 0; j < p.get(i).getBurst(); j++) {
+					if (j == (p.get(i).getBurst() / 2))
+						gantt.append("_P" + p.get(i).getId());
+					// System.out.printf("_P"+p.get(i).getId());
+
+					gantt.append("_");
+				}
+				
+			}
+		} catch (Exception e) {
+
 		}
 
 		// Calcular a media de espera
@@ -88,26 +106,13 @@ public class Escalonador {
 		mResp /= i;
 		sb.append("\n\nTempo medio de espera: " + mEsp);
 		sb.append("\nTempo medio de entrega: " + mResp);
+		sb.append("\n\n" + gantt);
 		JOptionPane.showMessageDialog(null, sb);
 		sb = new StringBuilder();
 	}
 
-	// Simulador do escalonamento FCFS
-	public void FCFS() {
-
-		int i, j;
-		entrada();
-		SoBurst();
-		imprimir(lista);
-
-	}
-
-	// Simulador do escalonamento SJF
-	public void SJF() {
-		entrada();
-		tChegada();
-
-		ArrayList<Process> p = new ArrayList<Process>(lista);
+	public ArrayList<Process> ordenarBurst(ArrayList<Process> li) {
+		ArrayList<Process> p = new ArrayList<Process>(li);
 		int sumRetorno = 0, menor = 0, pivo = 0;
 		// Ordena a lista para garantir a hierarquia de chegada
 		Collections.sort(p);
@@ -130,7 +135,39 @@ public class Escalonador {
 		// add o ultimo processo a lista, na ultima posicao
 		if (p.size() == 1)
 			listaOrd.add(p.remove(0));
-		imprimir(listaOrd);
+		return listaOrd;
+	}
+
+	// Simulador do escalonamento FCFS
+	public void FCFS() {
+
+		entrada();
+		SoBurst();
+		imprimir(lista);
+
+	}
+
+	// Simulador do escalonamento SJF
+	public void SJF() {
+		entrada();
+		tChegada();
+		/*
+		 * ordenarBurst(lista);
+		 * 
+		 * ArrayList<Process> p = new ArrayList<Process>(lista); int sumRetorno
+		 * = 0, menor = 0, pivo = 0; // Ordena a lista para garantir a
+		 * hierarquia de chegada Collections.sort(p); listaOrd.add(p.remove(0));
+		 * sumRetorno = listaOrd.get(0).getBurst();
+		 * 
+		 * while (p.size() > 1) { pivo = 0; for (int i = 1; i < p.size(); i++) {
+		 * if (p.get(pivo).getBurst() <= p.get(i).getBurst() &&
+		 * p.get(pivo).gettCheg() < sumRetorno) menor = pivo; else if
+		 * (p.get(i).gettCheg() < sumRetorno) { pivo = i; menor = i; } }
+		 * sumRetorno += p.get(menor).getBurst(); listaOrd.add(p.remove(menor));
+		 * } // add o ultimo processo a lista, na ultima posicao if (p.size() ==
+		 * 1) listaOrd.add(p.remove(0));
+		 */
+		imprimir(ordenarBurst(lista));
 	}
 
 	public void SRTF() {
