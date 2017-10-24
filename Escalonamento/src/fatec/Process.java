@@ -1,17 +1,66 @@
 package fatec;
 
 public class Process implements Comparable<Process> {
-	/*
-	 * ArrayList<Integer> p,burst,tEsp,tResp; public int n=0,j,i, Processo burst
-	 * Tempo de espera Tempo de resposta mEsp=0,Media de espera mResp=0;Media de
-	 * resposta Scanner scan = new Scanner(System.in);
-	 */
-	private int id,nome,burst,tcheg;
+	
+	private int id,
+				burst,
+				tCheg;
 
+	
+	public Process(int id, int burst) {
+		this.id = id;
+		this.burst = burst;
+	}
+
+	public Process(int id, int burst, int tCheg) {
+		this.id = id;
+		this.burst = burst;
+		this.tCheg = tCheg;
+	}
+
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public int getBurst() {
+		return burst;
+	}
+
+
+	public void setBurst(int burst) {
+		this.burst = burst;
+	}
+
+
+	public int gettCheg() {
+		return tCheg;
+	}
+
+
+	public void settCheg(int tCheg) {
+		this.tCheg = tCheg;
+	}
+
+	
 	@Override
-	public int compareTo(Process arg0) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(Process p) {
+		if ( (this.tCheg < p.gettCheg() || this.tCheg == p.gettCheg())
+				&& (this.getBurst() < p.getBurst()) ) {
+			return -1;
+		} else if ( (this.tCheg > p.gettCheg() || (this.tCheg == p.gettCheg()) && 
+				this.getBurst() > p.getBurst()) ) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 	
 }
